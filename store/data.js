@@ -1,7 +1,7 @@
 import ee from './event';
 
 const data = {
-  number: 9,
+  number: 9.12,
   sentence: 'lol'
 };
 export default data;
