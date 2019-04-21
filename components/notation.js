@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Image } from 'react-native';
+import { Text, View, StyleSheet, Image, Animated } from 'react-native';
 
 export default class Notation extends React.Component {
   constructor(props){
@@ -7,7 +7,9 @@ export default class Notation extends React.Component {
     this.state = {
       firstNumber: 0,
       lastNumber: 0,
-      scrollStyle: 100,
+      scale: new Animated.Value(1),
+      translate: new Animated.Value(0),
+      stateAnimation: false,
     };
   }
 
@@ -21,15 +23,36 @@ export default class Notation extends React.Component {
     }
     if(nextProps.scrollY !== this.props.scrollY){
       const scrollValue = nextProps.scrollY;
-      let scrollStyle;
 
-      if(scrollValue == 0){
-        scrollStyle = 100;
-      }else{
-        scrollStyle = 50;
+      if(scrollValue == 0 && this.state.stateAnimation){
+        Animated.timing(
+          this.state.scale,
+          {
+            toValue: 1,
+            duration: 200,
+          },
+          this.state.translate,
+          {
+            toValue: -150,
+            duration: 200,
+          }
+        ).start();
+        this.setState({ stateAnimation: false });
+      }else if(scrollValue != 0 && !this.state.stateAnimation){
+        Animated.timing(
+          this.state.scale,
+          {
+            toValue: .5,
+            duration: 500,
+          },
+          this.state.translate,
+          {
+            toValue: -150,
+            duration: 500,
+          }
+        ).start();
+        this.setState({ stateAnimation: true });
       }
-
-      this.setState({ scrollStyle });
     }
   }
 
@@ -40,18 +63,25 @@ export default class Notation extends React.Component {
   }
 
   render() {
+    let { fadeAnim } = this.state;
     return (
-      <View style={styles.container}>
-        <Text style={[styles.firstNumber, {fontSize: this.state.scrollStyle}]}>
-          {this.state.firstNumber}
-        </Text>
-        <Text style={styles.lastNumber}>
-          {this.state.lastNumber}
-        </Text>
-        <Image style={styles.logo} source={require('../assets/icon.png')} />
-      </View>
+        <Animated.View style={[styles.container,{transform: [
+          {scale: this.state.scale},
+          {translateX: this.state.scale.interpolate({
+            inputRange: [0, 1],
+            outputRange: [-500, 0]  // 0 : 150, 0.5 : 75, 1 : 0
+          })},
+          {perspective: 1000}, // without this line this Animation will not render on Android while working fine on iOS
+        ]}]}>
+          <Text style={styles.firstNumber}>
+            {this.state.firstNumber}
+          </Text>
+          <Text style={styles.lastNumber}>
+            {this.state.lastNumber}
+          </Text>
+          <Image style={styles.logo} source={require('../assets/icon.png')} />
+        </Animated.View>
     );
-
   }
 }
 
@@ -64,9 +94,11 @@ const styles = StyleSheet.create({
     top: 0,
     marginTop: 25,
     marginBottom: 25,
+    position: 'absolute',
   },
   firstNumber: {
     bottom: 0,
+    fontSize: 100,
   },
   lastNumber: {
     marginTop: 65,
