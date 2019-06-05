@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Image, Animated } from 'react-native';
+import { Text, View, StyleSheet, Image, Animated, Dimensions } from 'react-native';
 
 export default class Notation extends React.Component {
   constructor(props){
@@ -7,9 +7,11 @@ export default class Notation extends React.Component {
     this.state = {
       firstNumber: 0,
       lastNumber: 0,
-      scale: new Animated.Value(1),
-      translate: new Animated.Value(0),
-      stateAnimation: false,
+      scaleTarget: 0,
+      isTop: true,
+      xAnimated: new Animated.Value(Dimensions.get('window').width /2),
+      scaleAnimated: new Animated.Value(1),
+      midScreen: Dimensions.get('window').width /2
     };
   }
 
@@ -18,42 +20,14 @@ export default class Notation extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.value !== this.props.value){
-      this.computeValue(nextProps.value);
-    }
-    if(nextProps.scrollY !== this.props.scrollY){
-      const scrollValue = nextProps.scrollY;
-
-      if(scrollValue == 0 && this.state.stateAnimation){
-        Animated.timing(
-          this.state.scale,
-          {
-            toValue: 1,
-            duration: 200,
-          },
-          this.state.translate,
-          {
-            toValue: -150,
-            duration: 200,
-          }
-        ).start();
-        this.setState({ stateAnimation: false });
-      }else if(scrollValue != 0 && !this.state.stateAnimation){
-        Animated.timing(
-          this.state.scale,
-          {
-            toValue: .5,
-            duration: 500,
-          },
-          this.state.translate,
-          {
-            toValue: -150,
-            duration: 500,
-          }
-        ).start();
-        this.setState({ stateAnimation: true });
-      }
-    }
+    this.setState({isTop: nextProps.scrollY == 0 }, ()=>{
+      Animated.timing(this.state.xAnimated, {
+        toValue: this.state.isTop ? this.state.midScreen : 30
+      }).start();
+      Animated.timing(this.state.scaleAnimated, {
+        toValue: this.state.isTop ? 1 : 0.5
+      }).start();
+    });
   }
 
   computeValue(value){
@@ -65,14 +39,9 @@ export default class Notation extends React.Component {
   render() {
     let { fadeAnim } = this.state;
     return (
-        <Animated.View style={[styles.container,{transform: [
-          {scale: this.state.scale},
-          {translateX: this.state.scale.interpolate({
-            inputRange: [0, 1],
-            outputRange: [-500, 0]  // 0 : 150, 0.5 : 75, 1 : 0
-          })},
-          {perspective: 1000}, // without this line this Animation will not render on Android while working fine on iOS
-        ]}]}>
+        <Animated.View style={[styles.container,{
+          transform: [{translateX: this.state.xAnimated},{scale: this.state.scaleAnimated}],
+        }]}>
           <Text style={styles.firstNumber}>
             {this.state.firstNumber}
           </Text>
@@ -87,22 +56,34 @@ export default class Notation extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 'auto',
-    flexDirection: 'row',
-    top: 0,
-    marginTop: 25,
-    marginBottom: 25,
     position: 'absolute',
+    alignItems: 'center',
+   justifyContent: 'center',
+   flexDirection: 'row',
+    height: 100,
+    width: 100,
+    top: 10,
+    left: -50,
+    marginTop: 25,
   },
   firstNumber: {
-    bottom: 0,
+    top: 0,
     fontSize: 100,
+    color: '#20B5E0',
+    textAlign: 'center',
+    textShadowColor: '#20B5E0',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 10
   },
   lastNumber: {
     marginTop: 65,
     fontSize: 20,
+    color: '#20B5E0',
+    textAlign: 'center',
+    textShadowColor: '#20B5E0',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 10
+
   },
   logo: {
     height: 0,
