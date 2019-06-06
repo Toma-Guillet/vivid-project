@@ -12,20 +12,20 @@ const data = {
     },
     {
       date: "2019-06-05T06:24:44.124Z",
-      value: -25,
-      category: 1,
+      value: -14.52,
+      category: 2,
       logType: 0
     },
     {
       date: "2019-06-05T06:24:44.124Z",
       value: 25,
-      category: 1,
+      category: 4,
       logType: 2
     },
     {
       date: "2019-06-05T06:24:44.124Z",
       value: 25,
-      category: 1,
+      category: 3,
       logType: 0
     },
     {
@@ -37,7 +37,7 @@ const data = {
     {
       date: "2019-06-05T06:24:44.124Z",
       value: 25,
-      category: 1,
+      category: 5,
       logType: 0
     },
     {
@@ -49,7 +49,7 @@ const data = {
     {
       date: "2019-06-05T06:24:44.124Z",
       value: 25,
-      category: 1,
+      category: 5,
       logType: 0
     }
   ]

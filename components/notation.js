@@ -35,8 +35,16 @@ export default class Notation extends React.Component {
   }
 
   computeValue(value){
-      const firstNumber = Math.floor(value);
-      const lastNumber = Math.floor((value - firstNumber) * 100);
+      let valueTotal = 0;
+
+      for(let i=0; i<value.length; i++) {
+        const valueCategory = value[i].value;
+        valueTotal += valueCategory;
+      }
+
+      const firstNumber = Math.floor(valueTotal);
+      const lastNumber = Math.floor((valueTotal - firstNumber) * 100);
+
       this.setState({ firstNumber, lastNumber });
   }
 

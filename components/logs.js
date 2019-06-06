@@ -18,6 +18,8 @@ export default class Logs extends React.Component {
         <Log
           key = {i}
           date = {dataLog.date}
+          logType = {dataLog.logType}
+          value = {dataLog.value}
         />
       )
     }

@@ -89,7 +89,7 @@ export default class App extends React.Component {
          />
         <View style={styles.header}>
           <Diagram scrollY={this.state.scrollY} value={data.logs} />
-          <Notation style={styles.notation} value={data.number} scrollY={this.state.scrollY} />
+          <Notation style={styles.notation} value={data.logs} scrollY={this.state.scrollY} />
         </View>
         <Image style={styles.backgroundImg} source={require('./assets/background.png')} />
       </LinearGradient>

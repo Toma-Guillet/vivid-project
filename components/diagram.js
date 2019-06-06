@@ -44,7 +44,6 @@ export default class Diagram extends React.Component {
     let valueFamily = 0;
     let valueCommunity = 0;
     const diagramStatut = true;
-    console.log(value);
 
     for(let i=0; i<value.length; i++) {
       const idCategory = value[i].category;
@@ -61,11 +60,8 @@ export default class Diagram extends React.Component {
       }else if(idCategory == 5){
         valueCommunity += valueCategory;
       }
-
-      console.log(valueWork);
     }
-
-      this.setState({ valueWork, valueRessources, valueHealth, valueFamily, valueCommunity, diagramStatut });
+    this.setState({ valueWork, valueRessources, valueHealth, valueFamily, valueCommunity, diagramStatut });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -82,12 +78,6 @@ export default class Diagram extends React.Component {
   }
 
   render() {
-    const colorList = [
-      {offset: '0%', color: '#231557', opacity: '1'},
-      {offset: '29%', color: '#44107A', opacity: '1'},
-      {offset: '67%', color: '#FF1361', opacity: '1'},
-      {offset: '100%', color: '#FFF800', opacity: '1'}
-    ]
     return (
       <Animated.View
         style={[styles.container,{
@@ -102,11 +92,7 @@ export default class Diagram extends React.Component {
               style={styles.round}>
               <Image style={styles.roundImg} source={require('../assets/suitcase.png')} />
             </View>
-            <View style={[styles.dotRed,{
-              transform: [{translateY: 155}],
-            }]}>
-              <Image style={styles.iconCheck} source={require('../assets/warning-sign.png')} />
-            </View>
+            {this.statutIcon(this.state.valueWork)}
             {
                this.state.fontLoaded ? (
                 <Text style={styles.titleRound}>WORK</Text>
@@ -114,7 +100,7 @@ export default class Diagram extends React.Component {
              }
              {
                 this.state.fontLoaded ? (
-                  <Text style={styles.labelRound}>1 ISSUE TODAY</Text>
+                  <Text style={styles.labelRound}>{this.state.valueWork} POINTS</Text>
                 ) : null
               }
               <Image style={styles.slide} source={require('../assets/slide.png')} />
@@ -125,11 +111,7 @@ export default class Diagram extends React.Component {
               style={styles.round}>
               <Image style={styles.roundImg} source={require('../assets/storage.png')} />
             </View>
-            <View style={[styles.dotGreen,{
-              transform: [{translateY: 155}],
-            }]}>
-              <Image style={styles.iconCheck} source={require('../assets/checked.png')} />
-            </View>
+            {this.statutIcon(this.state.valueRessources)}
             {
                this.state.fontLoaded ? (
                 <Text style={styles.titleRound}>RESSOURCES</Text>
@@ -137,7 +119,7 @@ export default class Diagram extends React.Component {
              }
              {
               this.state.fontLoaded? (
-                  <Text style={styles.labelRound}>ALL GOOD</Text>
+                  <Text style={styles.labelRound}>{this.state.valueRessources} POINTS</Text>
                 ) : null
               }
               <Image style={styles.slide} source={require('../assets/slide2.png')} />
@@ -146,13 +128,9 @@ export default class Diagram extends React.Component {
           <View style={styles.pageContainer} key="3">
             <View
               style={styles.round}>
-              <Image style={styles.roundImg} source={require('../assets/storage.png')} />
+              <Image style={styles.roundImg} source={require('../assets/pharmacy.png')} />
             </View>
-            <View style={[styles.dotGreen,{
-              transform: [{translateY: 155}],
-            }]}>
-              <Image style={styles.iconCheck} source={require('../assets/checked.png')} />
-            </View>
+            {this.statutIcon(this.state.valueHealth)}
             {
                this.state.fontLoaded ? (
                 <Text style={styles.titleRound}>HEALTH</Text>
@@ -160,7 +138,7 @@ export default class Diagram extends React.Component {
              }
              {
                 this.state.fontLoaded ? (
-                  <Text style={styles.labelRound}>ALL GOOD</Text>
+                  <Text style={styles.labelRound}>{this.state.valueHealth} POINTS</Text>
                 ) : null
               }
               <Image style={styles.slide} source={require('../assets/slide3.png')} />
@@ -169,13 +147,9 @@ export default class Diagram extends React.Component {
           <View style={styles.pageContainer} key="4">
             <View
               style={styles.round}>
-              <Image style={styles.roundImg} source={require('../assets/storage.png')} />
+              <Image style={styles.roundImg} source={require('../assets/family.png')} />
             </View>
-            <View style={[styles.dotGreen,{
-              transform: [{translateY: 155}],
-            }]}>
-              <Image style={styles.iconCheck} source={require('../assets/checked.png')} />
-            </View>
+            {this.statutIcon(this.state.valueFamily)}
             {
                this.state.fontLoaded ? (
                 <Text style={styles.titleRound}>FAMILY</Text>
@@ -183,7 +157,7 @@ export default class Diagram extends React.Component {
              }
              {
                 this.state.fontLoaded ? (
-                  <Text style={styles.labelRound}>ALL GOOD</Text>
+                  <Text style={styles.labelRound}>{this.state.valueFamily} POINTS</Text>
                 ) : null
               }
               <Image style={styles.slide} source={require('../assets/slide4.png')} />
@@ -192,13 +166,9 @@ export default class Diagram extends React.Component {
           <View style={styles.pageContainer} key="5">
             <View
               style={styles.round}>
-              <Image style={styles.roundImg} source={require('../assets/storage.png')} />
+              <Image style={styles.roundImg} source={require('../assets/speech-bubble.png')} />
             </View>
-            <View style={[styles.dotGreen,{
-              transform: [{translateY: 155}],
-            }]}>
-              <Image style={styles.iconCheck} source={require('../assets/checked.png')} />
-            </View>
+            {this.statutIcon(this.state.valueCommunity)}
             {
                this.state.fontLoaded ? (
                 <Text style={styles.titleRound}>COMMUNITY</Text>
@@ -206,7 +176,7 @@ export default class Diagram extends React.Component {
              }
              {
                 this.state.fontLoaded ? (
-                  <Text style={styles.labelRound}>ALL GOOD</Text>
+                  <Text style={styles.labelRound}>{this.state.valueCommunity} POINTS</Text>
                 ) : null
               }
               <Image style={styles.slide} source={require('../assets/slide5.png')} />
@@ -256,6 +226,14 @@ export default class Diagram extends React.Component {
       </Animated.View>
     );
 
+  }
+
+  statutIcon(info){
+    if (info >= 0) {
+            return <View style={[styles.dotGreen,{transform: [{translateY: 155}]}]}><Image style={styles.iconCheck} source={require('../assets/checked.png')} /></View>;
+        } else {
+            return <View style={[styles.dotRed,{transform: [{translateY: 155}]}]}><Image style={styles.iconCheck} source={require('../assets/warning-sign.png')} /></View>;
+        }
   }
 }
 
