@@ -7,12 +7,25 @@ export default class Logs extends React.Component {
 
   constructor(props){
     super(props);
+    this.state = {
+      valueArray: 0
+    };
+  }
+  componentDidMount() {
+    const valueArray = this.props.dataLogs.length;
+    this.setState({ valueArray });
   }
 
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.dataLogs.length !== this.state.valueArray){
+      const valueArray = nextProps.dataLogs.length;
+      this.setState({ valueArray });
+    }
+  }
 
   render() {
     const listLogs = [];
-    for(let i=0; i<this.props.dataLogs.length; i++) {
+    for(let i=(this.props.dataLogs.length -1); i>=0; i--) {
       const dataLog = this.props.dataLogs[i];
       listLogs.push(
         <Log
@@ -20,6 +33,7 @@ export default class Logs extends React.Component {
           date = {dataLog.date}
           logType = {dataLog.logType}
           value = {dataLog.value}
+          category = {dataLog.category}
         />
       )
     }

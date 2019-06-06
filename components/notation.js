@@ -6,6 +6,7 @@ export default class Notation extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      valueArray: 0,
       firstNumber: 0,
       lastNumber: 0,
       scaleTarget: 0,
@@ -27,16 +28,21 @@ export default class Notation extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if(nextProps.value.length !== this.state.valueArray){
+      this.computeValue(nextProps.value);
+    }
     this.setState({isTop: nextProps.scrollY == 0 }, ()=>{
       Animated.timing(this.state.xAnimated, {
         toValue: this.state.isTop ? this.state.midScreen : 50
       }).start();
     });
+
+
   }
 
   computeValue(value){
       let valueTotal = 0;
-
+      const valueArray = value.length;
       for(let i=0; i<value.length; i++) {
         const valueCategory = value[i].value;
         valueTotal += valueCategory;
@@ -45,7 +51,7 @@ export default class Notation extends React.Component {
       const firstNumber = Math.floor(valueTotal);
       const lastNumber = Math.floor((valueTotal - firstNumber) * 100);
 
-      this.setState({ firstNumber, lastNumber });
+      this.setState({ valueArray, firstNumber, lastNumber });
   }
 
   render() {
@@ -68,10 +74,6 @@ export default class Notation extends React.Component {
               </Text>
             ) : null
           }
-
-
-
-
           <Image style={styles.logo} source={require('../assets/icon.png')} />
         </Animated.View>
     );

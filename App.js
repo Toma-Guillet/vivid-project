@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, Image, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, Image, View, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { LinearGradient, Font, Asset, AppLoading, SplashScreen } from 'expo';
 
 
@@ -51,7 +51,9 @@ export default class App extends React.Component {
     }
 
   }
-
+  onPressIncrement() {
+    ee.emit('plop');
+  }
   render() {
     if (!this.state.isSplashReady) {
       return (
@@ -90,6 +92,11 @@ export default class App extends React.Component {
         <View style={styles.header}>
           <Diagram scrollY={this.state.scrollY} value={data.logs} />
           <Notation style={styles.notation} value={data.logs} scrollY={this.state.scrollY} />
+          <View style={styles.navContainer}>
+            <TouchableOpacity style={styles.colorbg} underlayColor='#fff' onPress={()=>this.onPressIncrement()}>
+              <Image style={styles.navIcon} source={require('./assets/add-button.png')} />
+            </TouchableOpacity>
+          </View>
         </View>
         <Image style={styles.backgroundImg} source={require('./assets/background.png')} />
       </LinearGradient>
@@ -127,6 +134,17 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%'
   },
+  colorbg: {
+    position: 'relative',
+    marginHorizontal: 10,
+    height: 30,
+    width: 30,
+    opacity: .75,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+
+  },
   container: {
     position: 'absolute',
     height: '85%',
@@ -148,5 +166,22 @@ const styles = StyleSheet.create({
     top: 0,
     left: -50,
     opacity: .75
+  },
+  navContainer: {
+    position: 'relative',
+    height: '15%',
+    width: '15%',
+    top: 50,
+    marginRight: 20,
+    marginLeft: 'auto',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  navIcon: {
+    position: 'relative',
+    marginHorizontal: 10,
+    height: 20,
+    width: 20
   }
 });

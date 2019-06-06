@@ -15,6 +15,7 @@ import TimeAgo from 'react-native-timeago';
        time: props.date,
        value: props.value,
        logType: props.logType,
+       logCategory: props.category,
        fontLoaded: false,
      };
    }
@@ -30,35 +31,86 @@ import TimeAgo from 'react-native-timeago';
        });
      }
 
-     if(this.state.logType == 0){
-       // Action positive dans le cadre de son travail
+     const msgCode = this.state.logCategory+''+this.state.logType;
+     if(msgCode == '1p1'){
        this.setState({
-         logText: 'Votre avez résolu un problème durant votre temps de travail.'
+         logText: 'Votre avez résolu un problème durant votre temps de travail'
        });
-     }else if(this.state.logType == 1){
-       // Action négative dans le cadre de son travail
+     }else if(msgCode == '1p2'){
        this.setState({
-         logText: 'Votre avez été à l\'origine d\'un problème durant votre temps de travail.'
+         logText: 'Vous avez effectuez des heures supplémentaires au travail'
        });
-     }else if(this.state.logType == 2){
+     }else if(msgCode == '1n1'){
        this.setState({
-         logText: 'Vous avez terminé votre journée de travail.'
+         logText: 'Vous avez été responsable d\'un incident durant votre temps de travail.'
        });
-     }else if(this.state.logType == 3){
+     }else if(msgCode == '1n2'){
        this.setState({
-         logText: 'Consommation hebdomadaire de ressources'
+         logText: 'Vous n\'avez pas effectuez le nombre d\'heures de travail quotidien requis'
        });
-     }else if(this.state.logType == 4){
+     }else if(msgCode == '2n1'){
        this.setState({
-         logText: 'Consommation hebdomadaire de ressources'
+         logText: 'Votre consommation d\'énergie quotidienne a été trop élevée'
        });
-     }else if(this.state.logType == 5){
+     }else if(msgCode == '2n2'){
        this.setState({
-         logText: 'Vous avez apporté une connaissance'
+         logText: 'Vous avez consommé un nombre de rations plus élevé que le seuil autorisé'
        });
-     }else if(this.state.logType == 6){
+     }else if(msgCode == '2p1'){
        this.setState({
-         logText: 'Vous avez apporté votre assistance à une personne en danger'
+         logText: 'Votre consommation d\'énergie quotidienne a été améliorée'
+       });
+     }else if(msgCode == '2p2'){
+       this.setState({
+         logText: 'Votre seuil de consommation de rations a été respecté'
+       });
+     }else if(msgCode == '3n1'){
+       this.setState({
+         logText: 'Vous avez été victime d\'un problème de santé'
+       });
+     }else if(msgCode == '3n2'){
+       this.setState({
+         logText: 'Vous avez utilisé un seuil de médicament trop élevé'
+       });
+     }else if(msgCode == '3p1'){
+       this.setState({
+         logText: 'Vous n\'avez eu aucun problème de santé ce mois-ci'
+       });
+     }else if(msgCode == '3p2'){
+       this.setState({
+         logText: 'Vous avez guéri sans utilisé de ressources médicales'
+       });
+     }else if(msgCode == '4n1'){
+       this.setState({
+         logText: 'Vous êtes à l\'orgine d\'un nombre de naissances plus élevée que le seuil autorisé'
+       });
+     }else if(msgCode == '4n2'){
+       this.setState({
+         logText: 'Vous vivez seul depuis plusieurs mois consécutifs'
+       });
+     }else if(msgCode == '4p1'){
+       this.setState({
+         logText: 'Vous avez correctement intégré votre enfant dans la communauté'
+       });
+     }else if(msgCode == '4p2'){
+       this.setState({
+         logText: 'Vous vivez au sein du foyer familial'
+       });
+     }else if(msgCode == '5n1'){
+       this.setState({
+         logText: 'Vous êtes à l\'origine d\'un accident'
+       });
+     }else if(msgCode == '5n2'){
+       this.setState({
+         logText: 'Vous avez été irrespectueux envers autrui'
+       });
+     }else if(msgCode == '5p1'){
+       this.setState({
+         logText: 'Vous avez été poli envers autrui'
+       });
+     }else if(msgCode == '5p2'){
+       this.setState({
+         logText: 'Vous avez été bénévole au sein d\'une association'
        });
      }
 

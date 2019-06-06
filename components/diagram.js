@@ -14,6 +14,7 @@ export default class Diagram extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      valueArray: 0,
       valueWork: 0,
       valueRessources: 0,
       valueHealth: 0,
@@ -43,6 +44,7 @@ export default class Diagram extends React.Component {
     let valueHealth = 0;
     let valueFamily = 0;
     let valueCommunity = 0;
+    const valueArray = value.length;
     const diagramStatut = true;
 
     for(let i=0; i<value.length; i++) {
@@ -60,20 +62,29 @@ export default class Diagram extends React.Component {
       }else if(idCategory == 5){
         valueCommunity += valueCategory;
       }
+      valueWork = Math.floor(valueWork*100)/100;
+      valueRessources = Math.floor(valueRessources*100)/100;
+      valueHealth = Math.floor(valueHealth*100)/100;
+      valueFamily = Math.floor(valueFamily*100)/100;
+      valueCommunity = Math.floor(valueCommunity*100)/100;
     }
-    this.setState({ valueWork, valueRessources, valueHealth, valueFamily, valueCommunity, diagramStatut });
+    this.setState({ valueArray, valueWork, valueRessources, valueHealth, valueFamily, valueCommunity, diagramStatut });
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({isTop: nextProps.scrollY == 0 }, ()=>{
-      Animated.timing(this.state.yAnimated, {
-        toValue: this.state.isTop ? 0 : this.state.widthScreen
-      }, {useNativeDriver: true}).start();
-    });
-    if(this.state.isTop){
-      this.viewpager.setPage(0);
+    if(nextProps.value.length !== this.state.valueArray){
+      this.computeValue(nextProps.value);
     }else{
-      this.viewpager.setPage(2);
+      this.setState({isTop: nextProps.scrollY == 0 }, ()=>{
+        Animated.timing(this.state.yAnimated, {
+          toValue: this.state.isTop ? 0 : this.state.widthScreen
+        }, {useNativeDriver: true}).start();
+      });
+      if(this.state.isTop){
+        this.viewpager.setPage(0);
+      }else{
+        this.viewpager.setPage(2);
+      }
     }
   }
 
