@@ -34,83 +34,83 @@ import TimeAgo from 'react-native-timeago';
      const msgCode = this.state.logCategory+''+this.state.logType;
      if(msgCode == '1p1'){
        this.setState({
-         logText: 'Votre avez résolu un problème durant votre temps de travail'
+         logText: 'You have solved a problem during your working time'
        });
      }else if(msgCode == '1p2'){
        this.setState({
-         logText: 'Vous avez effectuez des heures supplémentaires au travail'
+         logText: 'You have worked overtime at work'
        });
      }else if(msgCode == '1n1'){
        this.setState({
-         logText: 'Vous avez été responsable d\'un incident durant votre temps de travail.'
+         logText: 'You were responsible for an incident during your working time'
        });
      }else if(msgCode == '1n2'){
        this.setState({
-         logText: 'Vous n\'avez pas effectuez le nombre d\'heures de travail quotidien requis'
+         logText: 'You have not completed the required number of daily working hours'
        });
      }else if(msgCode == '2n1'){
        this.setState({
-         logText: 'Votre consommation d\'énergie quotidienne a été trop élevée'
+         logText: 'Your daily energy consumption has been too high'
        });
      }else if(msgCode == '2n2'){
        this.setState({
-         logText: 'Vous avez consommé un nombre de rations plus élevé que le seuil autorisé'
+         logText: 'You have consumed more rations than the authorized threshold'
        });
      }else if(msgCode == '2p1'){
        this.setState({
-         logText: 'Votre consommation d\'énergie quotidienne a été améliorée'
+         logText: 'Your daily energy consumption has been improved'
        });
      }else if(msgCode == '2p2'){
        this.setState({
-         logText: 'Votre seuil de consommation de rations a été respecté'
+         logText: 'Your ration consumption threshold has been respected'
        });
      }else if(msgCode == '3n1'){
        this.setState({
-         logText: 'Vous avez été victime d\'un problème de santé'
+         logText: 'You have been the victim of a health problem'
        });
      }else if(msgCode == '3n2'){
        this.setState({
-         logText: 'Vous avez utilisé un seuil de médicament trop élevé'
+         logText: 'You have used a medication threshold that is too high'
        });
      }else if(msgCode == '3p1'){
        this.setState({
-         logText: 'Vous n\'avez eu aucun problème de santé ce mois-ci'
+         logText: 'You haven\'t had any health problems this month'
        });
      }else if(msgCode == '3p2'){
        this.setState({
-         logText: 'Vous avez guéri sans utilisé de ressources médicales'
+         logText: 'You healed without using medical resources'
        });
      }else if(msgCode == '4n1'){
        this.setState({
-         logText: 'Vous êtes à l\'orgine d\'un nombre de naissances plus élevée que le seuil autorisé'
+         logText: 'You are at the origin of a higher number of births than the authorized threshold'
        });
      }else if(msgCode == '4n2'){
        this.setState({
-         logText: 'Vous vivez seul depuis plusieurs mois consécutifs'
+         logText: 'You have been living alone for several consecutive months'
        });
      }else if(msgCode == '4p1'){
        this.setState({
-         logText: 'Vous avez correctement intégré votre enfant dans la communauté'
+         logText: 'You have properly integrated your child into the community'
        });
      }else if(msgCode == '4p2'){
        this.setState({
-         logText: 'Vous vivez au sein du foyer familial'
+         logText: 'You live in the family home'
        });
      }else if(msgCode == '5n1'){
        this.setState({
-         logText: 'Vous êtes à l\'origine d\'un accident'
+         logText: 'You are the cause of an accident'
        });
      }else if(msgCode == '5n2'){
        this.setState({
-         logText: 'Vous avez été irrespectueux envers autrui'
+         logText: 'You have been disrespectful to others'
        });
      }else if(msgCode == '5p1'){
        this.setState({
-         logText: 'Vous avez été poli envers autrui'
+         logText: 'You have been polite to others'
        });
      }else if(msgCode == '5p2'){
        this.setState({
-         logText: 'Vous avez été bénévole au sein d\'une association'
+         logText: 'You have been a volunteer with an association'
        });
      }
 
