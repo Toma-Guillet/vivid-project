@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "vivid-project",
-    "slug": "vivid-project",
+    "name": "vivid",
+    "slug": "vivid",
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": [
@@ -14,7 +14,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#210349"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

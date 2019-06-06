@@ -43,6 +43,6 @@ const styles = StyleSheet.create({
   whiteSpace: {
     position: 'relative',
     width: '100%',
-    height: 200
+    height: 290
   }
 });

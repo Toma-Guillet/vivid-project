@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, Image, Animated, Dimensions } from 'react-native';
+import { Font } from 'expo';
 
 export default class Notation extends React.Component {
   constructor(props){
@@ -11,21 +12,24 @@ export default class Notation extends React.Component {
       isTop: true,
       xAnimated: new Animated.Value(Dimensions.get('window').width /2),
       scaleAnimated: new Animated.Value(1),
-      midScreen: Dimensions.get('window').width /2
+      midScreen: Dimensions.get('window').width /2,
+      fontLoaded: false,
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.computeValue(this.props.value);
+    await Font.loadAsync({
+      'abel-regular': require('../assets/fonts/Abel-Regular.ttf'),
+    });
+
+    this.setState({ fontLoaded: true });
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({isTop: nextProps.scrollY == 0 }, ()=>{
       Animated.timing(this.state.xAnimated, {
-        toValue: this.state.isTop ? this.state.midScreen : 30
-      }).start();
-      Animated.timing(this.state.scaleAnimated, {
-        toValue: this.state.isTop ? 1 : 0.5
+        toValue: this.state.isTop ? this.state.midScreen : 50
       }).start();
     });
   }
@@ -42,12 +46,24 @@ export default class Notation extends React.Component {
         <Animated.View style={[styles.container,{
           transform: [{translateX: this.state.xAnimated},{scale: this.state.scaleAnimated}],
         }]}>
-          <Text style={styles.firstNumber}>
-            {this.state.firstNumber}
-          </Text>
-          <Text style={styles.lastNumber}>
-            {this.state.lastNumber}
-          </Text>
+        {
+           this.state.fontLoaded ? (
+             <Text style={styles.firstNumber}>
+               {this.state.firstNumber}
+             </Text>
+           ) : null
+         }
+         {
+            this.state.fontLoaded ? (
+              <Text style={styles.lastNumber}>
+                {this.state.lastNumber}
+              </Text>
+            ) : null
+          }
+
+
+
+
           <Image style={styles.logo} source={require('../assets/icon.png')} />
         </Animated.View>
     );
@@ -60,30 +76,31 @@ const styles = StyleSheet.create({
     alignItems: 'center',
    justifyContent: 'center',
    flexDirection: 'row',
-    height: 100,
+    height: 80,
     width: 100,
-    top: 10,
+    top: 0,
     left: -50,
     marginTop: 25,
   },
   firstNumber: {
     top: 0,
-    fontSize: 100,
+    fontSize: 60,
     color: '#20B5E0',
     textAlign: 'center',
     textShadowColor: '#20B5E0',
     textShadowOffset: {width: -1, height: 1},
-    textShadowRadius: 10
+    textShadowRadius: 10,
+    fontFamily: 'abel-regular'
   },
   lastNumber: {
-    marginTop: 65,
+    marginTop: 30,
     fontSize: 20,
     color: '#20B5E0',
     textAlign: 'center',
     textShadowColor: '#20B5E0',
     textShadowOffset: {width: -1, height: 1},
-    textShadowRadius: 10
-
+    textShadowRadius: 10,
+    fontFamily: 'abel-regular'
   },
   logo: {
     height: 0,
